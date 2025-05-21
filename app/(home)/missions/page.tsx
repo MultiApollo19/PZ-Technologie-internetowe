@@ -1,9 +1,4 @@
+export default async function missions() {
 
-
-export default function missions() {
-  return (
-    <div className="bg-white h-screen w-screen">
-Mission placeholder
-    </div>
-  );
+    return (<pre className="bg-white h-screen w-screen text-black"></pre>)
 }

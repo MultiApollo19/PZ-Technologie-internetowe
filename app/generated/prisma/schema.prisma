@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../app/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
+model missions {
+  id                Int      @id(map: "PK_missionID") @default(autoincrement())
+  created_at        DateTime @default(now()) @db.Timestamptz(6)
+  name              String?
+  description       String?
+  image             String?
+  name_slug         String?
+  description_short String?
+
+  @@ignore
+}
