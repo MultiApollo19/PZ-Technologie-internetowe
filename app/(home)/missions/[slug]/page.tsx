@@ -1,6 +1,6 @@
-interface Props{
+/*interface Props{
     params: {slug: string};
-}
+}*/
 export default async function MissionPage() {
     //const supabase = await createClient();
     //const {slug} = await params;
