@@ -1,14 +1,12 @@
 import prisma from "@/lib/prisma";
-import { unstable_cache } from 'next/cache'
-import { Metadata } from 'next';
 import Image from "next/image";
 
 
-interface Props {
+/*interface Props {
     params: {
         id: string | null,
     };
-}
+}*/
 /*export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const { id } = await params;
     const mission = await prisma.missions.findUnique({ where: { id: id } });
