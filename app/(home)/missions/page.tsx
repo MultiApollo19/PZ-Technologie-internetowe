@@ -18,7 +18,7 @@ export default async function missionsPage() {
             <div className="text-5xl font-bold text-center">
                 Missions
             </div>
-            <div className="bg-white h-screen w-screen text-black grid grid-cols-6 justify-items-center mt-10 grid-rows-3 gap-y-50">
+            <div className="bg-white h-screen w-screen text-black grid grid-cols-4 mt-10 grid-rows-3 mx-auto p-10 gap-4">
                 {missions.map((mission) => {
                     return <Card key={mission.id} {...mission} />;
                 })}
