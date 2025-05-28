@@ -1,5 +1,3 @@
-import { JsonArray } from "@prisma/client/runtime/client";
-import { JsonObject } from "@prisma/client/runtime/client";
 import Image from "next/image";
 import Link from "next/link";
 interface Props {
