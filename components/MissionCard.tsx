@@ -6,8 +6,7 @@ interface Props {
   image: string | null;
   description_short: string | null;
 }
-
-export default function Card({ id,name, image, description_short }: Props) {
+export default function MissionCard({ id,name, image, description_short }: Props) {
   return (
     <Link href={`/missions/${id}`}>
       <div className="grid grid-cols-2 grid-rows-2 rounded-3xl bg-gray-300">

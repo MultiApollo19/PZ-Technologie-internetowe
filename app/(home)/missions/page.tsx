@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { unstable_cache } from 'next/cache'
-import Card from "@/components/card";
+import MissionCard from "@/components/MissionCard";
 
 
 const getMisssions = unstable_cache(
@@ -8,7 +8,7 @@ const getMisssions = unstable_cache(
         return await prisma.missions.findMany()
     },
     [''],
-    { revalidate: 60 }
+    { revalidate: 10 }
 )
 
 export default async function missionsPage() {
@@ -20,7 +20,7 @@ export default async function missionsPage() {
             </div>
             <div className="bg-white h-screen w-screen text-black grid grid-cols-4 mt-10 grid-rows-3 mx-auto p-10 gap-4">
                 {missions.map((mission) => {
-                    return <Card key={mission.id} {...mission} />;
+                    return <MissionCard key={mission.id} {...mission} />;
                 })}
             </div>
         </div>

@@ -15,3 +15,12 @@ model missions {
   id                String   @id
   description_short String?
 }
+
+model rockets {
+  id          String  @id
+  name        String
+  operator    String
+  image       String?
+  description String?
+  massToOrbit Int[]
+}
