@@ -27,8 +27,11 @@ export default function RootLayout({
       <body className="relative">        
         <Analytics/>
         <Navbar/>
+        <><script async id="vectorshift-chat-widget" src="https://app.vectorshift.ai/chatWidget.js" chatbot-id="680e5f7d1abc4a478b4caf90" chatbot-height="600px" chatbot-width="400px" />
+        </>
         {children}
         <SpeedInsights/>
+        <></>
       </body>
     </html>
   );
