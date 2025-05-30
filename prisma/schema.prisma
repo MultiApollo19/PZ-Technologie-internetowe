@@ -8,19 +8,33 @@ datasource db {
 }
 
 model missions {
-  created_at        DateTime @default(now()) @db.Timestamptz(6)
+  startTime         DateTime  @default(now()) @db.Timestamptz(6)
   name              String?
   description       String?
   image             String?
-  id                String   @id
+  id                String    @id
   description_short String?
+  isCrewed          Boolean?
+  destitation       String?
+  agency            String?
+  status            String?
+  category          String?
+  endTime           DateTime? @db.Timestamptz(6)
 }
 
 model rockets {
-  id          String  @id
-  name        String
-  operator    String
-  image       String?
-  description String?
-  massToOrbit Int[]
+  id            String    @id
+  name          String
+  operator      String
+  image         String?
+  description   String?
+  massToOrbit   Int[]
+  firstFlight   DateTime? @db.Timestamptz(6)
+  height        Decimal?  @db.Decimal(5, 2)
+  diameter      Decimal?  @db.Decimal(4, 2)
+  stages        Int?
+  status        String?   @db.VarChar(20)
+  launchSite    String?   @db.VarChar(100)
+  successRate   Decimal?  @db.Decimal(5, 2)
+  totalLaunches Int?
 }

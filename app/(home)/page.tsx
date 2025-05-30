@@ -1,9 +1,13 @@
+import Hero from '@/components/Hero'
+import MissionHighlights from '@/components/MissionHighlights'
 
 
 export default function Home() {
   return (
-    <div className="bg-white h-screen w-screen">
+    <main className="min-h-screen">
+      <Hero />
+      <MissionHighlights />
 
-    </div>
-  );
+    </main>
+  )
 }

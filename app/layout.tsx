@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "SpaceLab",
@@ -24,14 +25,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative">        
+      <body className="">        
         <Analytics/>
         <Navbar/>
         <><script async id="vectorshift-chat-widget" src="https://app.vectorshift.ai/chatWidget.js" chatbot-id="680e5f7d1abc4a478b4caf90" chatbot-height="600px" chatbot-width="400px" />
         </>
         {children}
+        <Footer/>
         <SpeedInsights/>
-        <></>
+        
       </body>
     </html>
   );
