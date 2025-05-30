@@ -72,7 +72,7 @@ export default async function RocketsPage({ searchParams }: RocketsPageProps) {
                     Launch Vehicles
                 </h1>
                 <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-                    Discover the powerful rockets that carried humanity's greatest missions beyond Earth
+                    Discover the powerful rockets that carried humanity&apos;s greatest missions beyond Earth
                 </p>
 
                 {/* Smart Search */}

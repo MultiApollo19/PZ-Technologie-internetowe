@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import prisma from "@/lib/prisma";
 import ImageSlideshow from '@/components/ImageSlideshow';
@@ -93,7 +92,7 @@ export default async function AboutPage() {
           About SpaceLab
         </h1>
         <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
-          Since 1957, humanity has been pushing the boundaries of what's possible in space exploration.
+          Since 1957, humanity has been pushing the boundaries of what&apos;s possible in space exploration.
           SpaceLab aims to present the most important space missions in an accessible and engaging way,
           sharing knowledge about technology, bravery, and scientific breakthroughs that shaped our journey beyond Earth.
         </p>
@@ -108,7 +107,7 @@ export default async function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
               <p className="text-gray-300 leading-relaxed text-lg">
-                We believe that space exploration represents humanity's greatest achievements and most ambitious dreams.
+                We believe that space exploration represents humanity&apos;s greatest achievements and most ambitious dreams.
                 From the first artificial satellite to landing rovers on Mars, these missions showcase human ingenuity,
                 courage, and our relentless pursuit of knowledge.
               </p>
@@ -152,7 +151,7 @@ export default async function AboutPage() {
       {/* What You'll Find */}
       <div className="max-w-6xl mx-auto px-6 mb-20">
         <div className="bg-gray-900/50 backdrop-blur-sm rounded-2xl p-8 md:p-12">
-          <h2 className="text-3xl font-bold mb-12 text-white text-center">What You'll Discover</h2>
+          <h2 className="text-3xl font-bold mb-12 text-white text-center">What You&apos;ll Discover</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
@@ -164,7 +163,7 @@ export default async function AboutPage() {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">Historic Space Missions</h3>
-                  <p className="text-gray-300">Detailed information about humanity's greatest space achievements, from Apollo moon landings to Mars exploration.</p>
+                  <p className="text-gray-300">Detailed information about humanity&apos;s greatest space achievements, from Apollo moon landings to Mars exploration.</p>
                 </div>
               </div>
 
@@ -380,7 +379,7 @@ export default async function AboutPage() {
         <div className="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-8 md:p-12">
           <h2 className="text-3xl font-bold text-white mb-4">Start Exploring</h2>
           <p className="text-blue-100 text-lg mb-8">
-            Ready to discover humanity's greatest space achievements? Explore our collection of historic missions and cutting-edge rockets.
+            Ready to discover humanity&apos;s greatest space achievements? Explore our collection of historic missions and cutting-edge rockets.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">

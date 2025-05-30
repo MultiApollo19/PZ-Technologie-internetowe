@@ -62,63 +62,6 @@ const getMissions = unstable_cache(
 )
 
 // Rozszerzona funkcja do pobierania sugestii
-const getSuggestions = unstable_cache(
-    async (query: string) => {
-        if (!query || query.length < 2) return [];
-
-        const missions = await prisma.missions.findMany({
-            where: {
-                OR: [
-                    { name: { contains: query, mode: 'insensitive' as const } },
-                    { description_short: { contains: query, mode: 'insensitive' as const } },
-                    { agency: { contains: query, mode: 'insensitive' as const } },
-                    { status: { contains: query, mode: 'insensitive' as const } },
-                    { category: { contains: query, mode: 'insensitive' as const } },
-                    { destitation: { contains: query, mode: 'insensitive' as const } }
-                ]
-            },
-            select: {
-                id: true,
-                name: true,
-                description_short: true,
-                agency: true,
-                status: true,
-                category: true,
-                destitation: true
-            },
-            take: 8
-        });
-
-        return missions.map(mission => {
-            // Określ dlaczego ta misja pasuje do wyszukiwania
-            let matchReason = '';
-            const lowerQuery = query.toLowerCase();
-
-            if (mission.name?.toLowerCase().includes(lowerQuery)) {
-                matchReason = 'Mission name';
-            } else if (mission.agency?.toLowerCase().includes(lowerQuery)) {
-                matchReason = `Agency: ${mission.agency}`;
-            } else if (mission.status?.toLowerCase().includes(lowerQuery)) {
-                matchReason = `Status: ${mission.status}`;
-            } else if (mission.category?.toLowerCase().includes(lowerQuery)) {
-                matchReason = `Category: ${mission.category.replace(/_/g, ' ')}`;
-            } else if (mission.destitation?.toLowerCase().includes(lowerQuery)) {
-                matchReason = `Destination: ${mission.destitation}`;
-            } else if (mission.description_short?.toLowerCase().includes(lowerQuery)) {
-                matchReason = 'Description';
-            }
-
-            return {
-                id: mission.id,
-                text: mission.name || 'Unknown Mission',
-                description: matchReason || mission.description_short
-            };
-        });
-    },
-    ['mission-suggestions'],
-    { revalidate: 60 }
-);
-
 export default async function MissionsPage({ searchParams }: MissionsPageProps) {
     const params = await searchParams;
     const query = params.q || '';

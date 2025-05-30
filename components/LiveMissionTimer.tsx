@@ -16,7 +16,7 @@ interface TimeElapsed {
     seconds: number;
 }
 
-export default function LiveMissionTimer({ startTime, endTime, missionName }: LiveMissionTimerProps) {
+export default function LiveMissionTimer({ startTime, endTime }: LiveMissionTimerProps) {
     const [timeElapsed, setTimeElapsed] = useState<TimeElapsed>({
         years: 0,
         days: 0,
@@ -66,10 +66,6 @@ export default function LiveMissionTimer({ startTime, endTime, missionName }: Li
 
         return () => clearInterval(interval);
     }, [startTime, endTime]);
-
-    const formatNumber = (num: number): string => {
-        return num.toString().padStart(2, '0');
-    };
 
     const formatDuration = () => {
         let duration = '';

@@ -37,45 +37,6 @@ export default async function MissionPage({ params }: Props) {
         notFound();
     }
 
-    // Helper function for precise mission duration
-    const getMissionDuration = () => {
-        const start = new Date(mission.startTime);
-        const end = mission.endTime ? new Date(mission.endTime) : new Date();
-
-        const diffMs = end.getTime() - start.getTime();
-
-        if (diffMs < 0) return 'Invalid duration';
-
-        const seconds = Math.floor(diffMs / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
-        const years = Math.floor(days / 365.25);
-
-        const remainingDays = days % 365;
-        const remainingHours = hours % 24;
-        const remainingMinutes = minutes % 60;
-        const remainingSeconds = seconds % 60;
-
-        let duration = '';
-
-        if (years > 0) {
-            duration += `${years} year${years > 1 ? 's' : ''}, `;
-        }
-        if (remainingDays > 0) {
-            duration += `${remainingDays} day${remainingDays > 1 ? 's' : ''}, `;
-        }
-        if (remainingHours > 0) {
-            duration += `${remainingHours} hour${remainingHours > 1 ? 's' : ''}, `;
-        }
-        if (remainingMinutes > 0) {
-            duration += `${remainingMinutes} minute${remainingMinutes > 1 ? 's' : ''}, `;
-        }
-        duration += `${remainingSeconds} second${remainingSeconds > 1 ? 's' : ''}`;
-
-        return duration;
-    };
-
     const getMissionStatus = () => {
         if (mission.endTime) {
             return { status: 'Completed', color: 'text-blue-400' };

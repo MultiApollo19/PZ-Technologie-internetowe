@@ -116,7 +116,7 @@ export default async function Hero() {
       
       <div className="relative z-10 text-center max-w-5xl mx-auto px-6">
         <h1 className="text-6xl md:text-8xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-          Explore Humanity's Greatest Space Missions
+          Explore Humanity&apos;s Greatest Space Missions
         </h1>
         <p className="text-xl md:text-2xl mb-8 text-gray-200">
           {featuredMission?.description_short || 

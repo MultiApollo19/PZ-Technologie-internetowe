@@ -24,7 +24,7 @@ export default function Footer() {
               </h3>
             </div>
             <p className="text-gray-300 text-sm leading-relaxed">
-              Exploring humanity's greatest achievements in space exploration.
+              Exploring humanity&apos;s greatest achievements in space exploration.
               From the first satellite to modern Mars rovers.
             </p>
 

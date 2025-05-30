@@ -7,7 +7,7 @@ export default function NotFound() {
                 <div className="text-8xl mb-8">🚀</div>
                 <h1 className="text-4xl font-bold text-white mb-4">Rocket Not Found</h1>
                 <p className="text-xl text-gray-300 mb-8 max-w-md">
-                    The rocket you're looking for doesn't exist or has been moved.
+                    The rocket you&apos;re looking for doesn&apos;t exist or has been moved.
                 </p>
                 <Link 
                     href="/rockets"
