@@ -45,10 +45,11 @@ export default async function RocketPage({ params }: Props) {
         return `${value.toLocaleString()} kg`;
     };
 
-    const formatDecimal = (value: any) => {
+    const formatDecimal = (value: number | string | null | undefined | { toString(): string }) => {
         if (value === null || value === undefined) return null;
         return typeof value === 'object' && value.toString ? value.toString() : String(value);
     };
+
 
     const getStatusColor = (status: string | null) => {
         switch (status?.toUpperCase()) {

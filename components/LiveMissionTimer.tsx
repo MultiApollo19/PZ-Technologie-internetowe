@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 interface LiveMissionTimerProps {
     startTime: string; // ISO string
@@ -16,7 +16,7 @@ interface TimeElapsed {
     seconds: number;
 }
 
-export default function LiveMissionTimer({ startTime, endTime }: LiveMissionTimerProps) {
+export default function LiveMissionTimer({ startTime, endTime, missionName }: LiveMissionTimerProps) {
     const [timeElapsed, setTimeElapsed] = useState<TimeElapsed>({
         years: 0,
         days: 0,
@@ -25,7 +25,8 @@ export default function LiveMissionTimer({ startTime, endTime }: LiveMissionTime
         seconds: 0
     });
 
-    const calculateElapsedTime = (): TimeElapsed => {
+    // Memoize calculateElapsedTime with useCallback
+    const calculateElapsedTime = useCallback((): TimeElapsed => {
         const now = new Date();
         const start = new Date(startTime);
         const end = endTime ? new Date(endTime) : now;
@@ -48,7 +49,7 @@ export default function LiveMissionTimer({ startTime, endTime }: LiveMissionTime
         const seconds = Math.floor((remainingAfterHours % (1000 * 60)) / 1000);
 
         return { years, days, hours, minutes, seconds };
-    };
+    }, [startTime, endTime]); // Dependencies dla useCallback
 
     useEffect(() => {
         // Calculate initial value
@@ -65,7 +66,11 @@ export default function LiveMissionTimer({ startTime, endTime }: LiveMissionTime
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [startTime, endTime]);
+    }, [calculateElapsedTime, endTime]); // Dodaj calculateElapsedTime do dependencies
+
+    const formatNumber = (num: number): string => {
+        return num.toString().padStart(2, '0');
+    };
 
     const formatDuration = () => {
         let duration = '';

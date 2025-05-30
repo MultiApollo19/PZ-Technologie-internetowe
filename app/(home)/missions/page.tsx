@@ -78,7 +78,7 @@ export default async function MissionsPage({ searchParams }: MissionsPageProps) 
                     Space Missions
                 </h1>
                 <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-                    Explore humanity's greatest achievements in space exploration
+                    Explore humanity&apos;s greatest achievements in space exploration
                 </p>
 
                 {/* Smart Search */}
