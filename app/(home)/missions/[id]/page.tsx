@@ -242,7 +242,7 @@ export default async function MissionPage({ params }: Props) {
                             <div className="mt-12 rounded-2xl border border-blue-700/30 bg-gradient-to-br from-gray-900/70 via-gray-900/80 to-gray-800/80 shadow-xl p-1">
                                 <div className="rounded-2xl bg-gray-900/70 p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 transition-shadow duration-300 hover:shadow-blue-700/30 hover:shadow-2xl">
                                     {/* Rocket Image */}
-                                    <div className="relative w-48 h-60 md:w-56 md:h-70 flex-shrink-0 rounded-xl overflow-hidden shadow-lg border-2 border-blue-700/20">
+                                    <div className="relative w-48 h-60 md:w-52 md:h-70 flex-shrink-0 rounded-xl overflow-hidden shadow-lg border-2 border-blue-700/20">
                                         <Image
                                             src={mission.rockets.image || '/Images/placeholder.png'}
                                             alt={mission.rockets.name}
