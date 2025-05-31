@@ -29,13 +29,43 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function MissionPage({ params }: Props) {
     const { id } = await params;
 
+    // Pobierz misję wraz z powiązaną rakietą
     const mission = await prisma.missions.findUnique({
-        where: { id }
+        where: { id },
+        include: {
+            rockets: {
+                select: {
+                    id: true,
+                    name: true,
+                    operator: true,
+                    image: true,
+                    massToOrbit: true,
+                    height: true,
+                    diameter: true,
+                    stages: true,
+                    status: true
+                }
+            }
+        }
     });
 
     if (!mission) {
         notFound();
     }
+
+    // Helper functions
+    const formatPayload = (value: number) => {
+        if (value === 0) return 'N/A';
+        if (value >= 1000) {
+            return `${(value / 1000).toFixed(1)} tons`;
+        }
+        return `${value.toLocaleString()} kg`;
+    };
+
+    const formatDecimal = (value: number | null | undefined): string | null => {
+        if (value === null || value === undefined) return null;
+        return value.toString();
+    };
 
     const getMissionStatus = () => {
         if (mission.endTime && mission.status == "COMPLETED") {
@@ -52,7 +82,7 @@ export default async function MissionPage({ params }: Props) {
         if (now < start) return { status: 'Planned', color: 'text-yellow-400' };
         return { status: 'Active', color: 'text-green-400' };
     };
-    
+
     const getStatusColor = (status: string | null) => {
         switch (status?.toUpperCase()) {
             case 'PLANNED': return 'text-yellow-400';
@@ -72,9 +102,7 @@ export default async function MissionPage({ params }: Props) {
             case 'FAILED': return 'bg-red-600';
             case 'CANCELLED': return 'bg-gray-600';
             default: return 'bg-gray-600';
-
         }
-
     };
 
     const formatCategory = (category: string | null) => {
@@ -88,6 +116,7 @@ export default async function MissionPage({ params }: Props) {
     };
 
     const currentStatus = getMissionStatus();
+
     return (
         <div className="min-h-screen pt-24 pb-20">
             {/* Back Navigation */}
@@ -221,6 +250,93 @@ export default async function MissionPage({ params }: Props) {
                         </div>
                     </div>
 
+                    {/* Launch Vehicle Section */}
+                    {mission.rockets && (
+                        <Link href={`/rockets/${mission.rockets.id}`}>
+                            <div className="mt-12 rounded-2xl border border-blue-700/30 bg-gradient-to-br from-gray-900/70 via-gray-900/80 to-gray-800/80 shadow-xl p-1">
+                                <div className="rounded-2xl bg-gray-900/70 p-6 md:p-8 flex flex-col md:flex-row items-center gap-8 transition-shadow duration-300 hover:shadow-blue-700/30 hover:shadow-2xl">
+                                    {/* Rocket Image */}
+                                    <div className="relative w-48 h-60 md:w-56 md:h-70 flex-shrink-0 rounded-xl overflow-hidden shadow-lg border-2 border-blue-700/20">
+                                        <Image
+                                            src={mission.rockets.image || '/Images/placeholder.png'}
+                                            alt={mission.rockets.name}
+                                            fill
+                                            className="object-contain bg-gradient-to-t from-black/60 via-transparent to-transparent"
+                                            sizes="(max-width: 768px) 192px, 224px"
+                                        />
+                                        <div className="absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
+                                    </div>
+
+                                    {/* Rocket Info */}
+                                    <div className="flex-1 flex flex-col justify-center gap-4">
+                                        <div>
+                                            <h4 className="text-3xl font-extrabold text-white mb-1 tracking-tight flex items-center gap-2">
+                                                {mission.rockets.name}
+                                                <span className="ml-2 inline-block px-3 py-1 rounded-full bg-blue-600/80 text-xs font-semibold text-white tracking-wide shadow-sm">
+                                                    {mission.rockets.operator}
+                                                </span>
+                                            </h4>
+                                        </div>
+
+                                        <div className="flex flex-wrap gap-4 mb-2">
+                                            {/* Height */}
+                                            {mission.rockets.height && (
+                                                <div className="bg-gradient-to-br from-blue-800/60 to-blue-500/30 rounded-lg px-4 py-3 flex flex-col items-center min-w-[88px] shadow-inner">
+                                                    <span className="text-lg font-bold text-blue-300">{mission.rockets.height?.toString()}<span className="text-blue-500">m</span></span>
+                                                    <span className="text-xs text-blue-100 mt-1">Height</span>
+                                                </div>
+                                            )}
+                                            {/* Stages */}
+                                            {mission.rockets.stages && (
+                                                <div className="bg-gradient-to-br from-purple-800/60 to-purple-500/30 rounded-lg px-4 py-3 flex flex-col items-center min-w-[88px] shadow-inner">
+                                                    <span className="text-lg font-bold text-purple-300">{mission.rockets.stages}</span>
+                                                    <span className="text-xs text-purple-100 mt-1">Stages</span>
+                                                </div>
+                                            )}
+                                            {/* LEO Payload */}
+                                            {mission.rockets.massToOrbit?.[0] && (
+                                                <div className="bg-gradient-to-br from-green-800/60 to-green-500/30 rounded-lg px-4 py-3 flex flex-col items-center min-w-[110px] shadow-inner">
+                                                    <span className="text-lg font-bold text-green-300">
+                                                        {Number(mission.rockets.massToOrbit[0].toString()) >= 1000
+                                                            ? `${(Number(mission.rockets.massToOrbit[0].toString()) / 1000).toFixed(1)} tons`
+                                                            : `${mission.rockets.massToOrbit[0]} kg`
+                                                        }
+                                                    </span>
+                                                    <span className="text-xs text-green-100 mt-1">LEO Payload</span>
+                                                </div>
+                                            )}
+                                            {/* Status */}
+                                            {mission.rockets.status && (
+                                                <div className={`rounded-lg px-4 py-3 flex flex-col items-center min-w-[88px] shadow-inner
+              ${mission.rockets.status === 'ACTIVE'
+                                                        ? 'bg-green-700/60 text-green-300'
+                                                        : mission.rockets.status === 'RETIRED'
+                                                            ? 'bg-blue-800/60 text-blue-300'
+                                                            : 'bg-gray-700/60 text-gray-300'
+                                                    }`}>
+                                                    <span className="text-lg font-bold uppercase tracking-wide">
+                                                        {mission.rockets.status}
+                                                    </span>
+                                                    <span className="text-xs mt-1 text-white/60">Status</span>
+                                                </div>
+                                            )}
+                                        </div>
+
+                                        {/* CTA */}
+                                        <Link
+                                            href={`/rockets/${mission.rockets.id}`}
+                                            className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 font-semibold text-base mt-2 transition-colors group"
+                                        >
+                                            View Full Rocket Details
+                                            <svg className="ml-1 w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                                            </svg>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div></Link>
+                    )}
+
                     {/* Comprehensive Mission Overview */}
                     <div className="mt-12 p-8 bg-black/20 rounded-xl border border-gray-700">
                         <h3 className="text-2xl font-bold text-white mb-6 flex items-center">
@@ -317,7 +433,6 @@ export default async function MissionPage({ params }: Props) {
 
                                     <div>
                                         <span className="font-semibold text-white">Mission Duration:</span>
-                                        {/* ZASTĄPIONE LIVE TIMER KOMPONENTEM */}
                                         <LiveMissionTimer
                                             startTime={mission.startTime.toISOString()}
                                             endTime={mission.endTime?.toISOString() || null}
@@ -356,6 +471,13 @@ export default async function MissionPage({ params }: Props) {
                                             {mission.description_short || 'Scientific exploration and research'}
                                         </div>
                                     </div>
+
+                                    {mission.rockets && (
+                                        <div>
+                                            <span className="font-semibold text-white">Launch Vehicle:</span>
+                                            <div className="text-gray-300">{mission.rockets.name}</div>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

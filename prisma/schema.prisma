@@ -20,21 +20,24 @@ model missions {
   status            String?
   category          String?
   endTime           DateTime? @db.Timestamptz(6)
+  launchVehicle     String?
+  rockets           rockets?  @relation(fields: [launchVehicle], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "launchVeh")
 }
 
 model rockets {
-  id            String    @id
+  id            String     @id
   name          String
   operator      String
   image         String?
   description   String?
   massToOrbit   Int[]
-  firstFlight   DateTime? @db.Timestamptz(6)
-  height        Decimal?  @db.Decimal(5, 2)
-  diameter      Decimal?  @db.Decimal(4, 2)
+  firstFlight   DateTime?  @db.Timestamptz(6)
+  height        Decimal?   @db.Decimal(5, 2)
+  diameter      Decimal?   @db.Decimal(4, 2)
   stages        Int?
-  status        String?   @db.VarChar(20)
-  launchSite    String?   @db.VarChar(100)
-  successRate   Decimal?  @db.Decimal(5, 2)
+  status        String?    @db.VarChar(20)
+  launchSite    String?    @db.VarChar(100)
+  successRate   Decimal?   @db.Decimal(5, 2)
   totalLaunches Int?
+  missions      missions[]
 }
