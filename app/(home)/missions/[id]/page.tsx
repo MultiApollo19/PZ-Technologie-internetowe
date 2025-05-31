@@ -88,7 +88,6 @@ export default async function MissionPage({ params }: Props) {
     };
 
     const currentStatus = getMissionStatus();
-console.log(getStatusBadgeColor(mission.status))
     return (
         <div className="min-h-screen pt-24 pb-20">
             {/* Back Navigation */}
