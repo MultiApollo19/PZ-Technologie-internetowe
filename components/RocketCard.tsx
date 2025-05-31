@@ -33,7 +33,7 @@ export default function RocketCard({ id, name, operator, image, massToOrbit, des
         {/* Rocket Image */}
         <div className="relative h-72 md:h-80 overflow-hidden">
           <Image 
-            src={image || '/images/placeholder-rocket.jpg'} 
+            src={image || '/Images/placeholder.png'} 
             alt={name || "Rocket"} 
             fill
             className="object-cover group-hover:scale-125 transition-transform duration-500"

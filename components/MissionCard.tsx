@@ -23,7 +23,7 @@ export default function MissionCard({
             <div className="bg-gray-900 rounded-xl overflow-hidden hover:transform hover:scale-105 transition-all duration-300 shadow-lg">
                 <div className="relative h-64">
                     <Image
-                        src={image || '/images/placeholder-mission.jpg'}
+                        src={image || '/Images/placeholder.png'}
                         alt={name || 'Space Mission'}
                         fill
                         className="object-cover group-hover:scale-110 transition-transform duration-300"
