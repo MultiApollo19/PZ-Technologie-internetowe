@@ -247,7 +247,7 @@ export default async function MissionPage({ params }: Props) {
                                             src={mission.rockets.image || '/Images/placeholder.png'}
                                             alt={mission.rockets.name}
                                             fill
-                                            className="object-contain bg-gradient-to-t from-black/60 via-transparent to-transparent"
+                                            className="object-contain bg-gradient-to-t from-black/60 via-transparent to-transparent object-cover"
                                             sizes="(max-width: 768px) 192px, 224px"
                                         />
                                         <div className="absolute bottom-0 left-0 w-full h-6 bg-gradient-to-t from-black/60 to-transparent pointer-events-none" />
