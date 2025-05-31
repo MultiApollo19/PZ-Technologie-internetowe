@@ -53,20 +53,6 @@ export default async function MissionPage({ params }: Props) {
         notFound();
     }
 
-    // Helper functions
-    const formatPayload = (value: number) => {
-        if (value === 0) return 'N/A';
-        if (value >= 1000) {
-            return `${(value / 1000).toFixed(1)} tons`;
-        }
-        return `${value.toLocaleString()} kg`;
-    };
-
-    const formatDecimal = (value: number | null | undefined): string | null => {
-        if (value === null || value === undefined) return null;
-        return value.toString();
-    };
-
     const getMissionStatus = () => {
         if (mission.endTime && mission.status == "COMPLETED") {
             return { status: 'Completed', color: 'text-blue-400' };
