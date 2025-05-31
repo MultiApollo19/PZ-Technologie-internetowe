@@ -38,7 +38,7 @@ export default async function MissionPage({ params }: Props) {
     }
 
     const getMissionStatus = () => {
-        if (mission.endTime) {
+        if (mission.endTime && mission.status == "COMPLETED") {
             return { status: 'Completed', color: 'text-blue-400' };
         }
 
@@ -52,7 +52,7 @@ export default async function MissionPage({ params }: Props) {
         if (now < start) return { status: 'Planned', color: 'text-yellow-400' };
         return { status: 'Active', color: 'text-green-400' };
     };
-
+    
     const getStatusColor = (status: string | null) => {
         switch (status?.toUpperCase()) {
             case 'PLANNED': return 'text-yellow-400';
@@ -72,7 +72,9 @@ export default async function MissionPage({ params }: Props) {
             case 'FAILED': return 'bg-red-600';
             case 'CANCELLED': return 'bg-gray-600';
             default: return 'bg-gray-600';
+
         }
+
     };
 
     const formatCategory = (category: string | null) => {
@@ -86,7 +88,7 @@ export default async function MissionPage({ params }: Props) {
     };
 
     const currentStatus = getMissionStatus();
-
+console.log(getStatusBadgeColor(mission.status))
     return (
         <div className="min-h-screen pt-24 pb-20">
             {/* Back Navigation */}
@@ -123,8 +125,8 @@ export default async function MissionPage({ params }: Props) {
 
                         {mission.isCrewed !== null && (
                             <div className={`px-4 py-2 rounded-full text-lg font-semibold ${mission.isCrewed
-                                    ? 'bg-green-600 text-white'
-                                    : 'bg-purple-600 text-white'
+                                ? 'bg-green-600 text-white'
+                                : 'bg-purple-600 text-white'
                                 }`}>
                                 {mission.isCrewed ? 'Crewed Mission' : 'Robotic Mission'}
                             </div>
@@ -136,7 +138,7 @@ export default async function MissionPage({ params }: Props) {
                             </div>
                         )}
 
-                        <div className={`${mission.endTime ? 'bg-blue-600' : getStatusBadgeColor(mission.status)} text-white px-4 py-2 rounded-full text-lg font-semibold`}>
+                        <div className={`${getStatusBadgeColor(mission.status)} text-white px-4 py-2 rounded-full text-lg font-semibold`}>
                             {currentStatus.status}
                         </div>
 
@@ -270,7 +272,7 @@ export default async function MissionPage({ params }: Props) {
                                 <h4 className="text-lg font-semibold text-purple-400 border-b border-purple-400/30 pb-2">
                                     Mission Timeline
                                 </h4>
-                                
+
                                 <div className="space-y-3 text-gray-300">
                                     <div>
                                         <span className="font-semibold text-white">Launch:</span>
@@ -313,11 +315,11 @@ export default async function MissionPage({ params }: Props) {
                                             </div>
                                         </div>
                                     )}
-                                    
+
                                     <div>
                                         <span className="font-semibold text-white">Mission Duration:</span>
                                         {/* ZASTĄPIONE LIVE TIMER KOMPONENTEM */}
-                                        <LiveMissionTimer 
+                                        <LiveMissionTimer
                                             startTime={mission.startTime.toISOString()}
                                             endTime={mission.endTime?.toISOString() || null}
                                             missionName={mission.name || 'Unknown Mission'}
